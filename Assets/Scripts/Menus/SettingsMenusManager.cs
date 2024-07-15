@@ -31,6 +31,8 @@ public class SettingsMenusManager : MonoBehaviour
     [SerializeField] MenuManager _menuManager;
     MenuButtonTracker _menuButtonTracker;
 
+    public bool isInMenu = true;
+
     public static SettingsMenusManager instance;
 
     private void Awake()
@@ -54,7 +56,7 @@ public class SettingsMenusManager : MonoBehaviour
             Destroy(transform.parent.parent.gameObject);
         }
         // Prevents the settings and sound managers from being destroyed on scene change
-        DontDestroyOnLoad(transform.parent.parent);
+        if(isInMenu) DontDestroyOnLoad(transform.parent.parent);
     }
 
     private void Start()

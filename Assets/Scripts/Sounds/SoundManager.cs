@@ -25,7 +25,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] Sprite _muteSprite;
     [SerializeField] Sprite _unmuteSprite;
 
-    SettingsMenu _settingsMenu;
 
     private float _musicVolume = 1f;
     private float _sfxVolume = 1f;
@@ -47,7 +46,6 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        _settingsMenu = SettingsMenu.instance;
 
         if (PlayerPrefs.GetInt("mainToggle", 1) == 0)
         {

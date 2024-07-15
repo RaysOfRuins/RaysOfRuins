@@ -113,7 +113,7 @@ public class FactionQuestManager : MonoBehaviour
         {
             if (_factionQuests[questIndex].GetCurrentQuestAction() is QuestKill aQuestKill)
             {
-                if (aQuestKill.IsFinished(faction, enemyType))
+                if (aQuestKill.IsFinished(faction, enemyType, out bool hasContributed))
                 {
                     GetReward(faction);
                     NextQuest(ref questIndex);

@@ -95,6 +95,8 @@ public class QuestManager : MonoBehaviour
     [SerializeField]
     private FactionUnitManager _factionUnitManager;
 
+    private List<string> specialEnemiesKilledWithoutBeingTheTask = new();
+
     public static QuestManager instance;
 
     //create an instance of the DialogueManager
@@ -175,12 +177,23 @@ public class QuestManager : MonoBehaviour
     {
         if (_quests[_currentMainQuest].GetCurrentQuestAction() is QuestKill aQuestKill)
         {
-            if (aQuestKill.IsFinished(faction, enemyType))
+            bool isFinished = aQuestKill.IsFinished(faction, enemyType, out bool hasContributed);
+
+            if(!hasContributed && enemyType != "")
+            {
+                specialEnemiesKilledWithoutBeingTheTask.Add(enemyType);
+            }
+
+            if (isFinished)
             {
                 NextMainQuest();
             }
             _factionQuestManager.CheckFactionQuestsKill(faction, enemyType);
             UpdateInGameQuestUi();
+        }
+        else if(enemyType != "")
+        {
+            specialEnemiesKilledWithoutBeingTheTask.Add(enemyType);
         }
     }
 
@@ -210,6 +223,7 @@ public class QuestManager : MonoBehaviour
             {
                 MapManager.instance.SetQuestWaypoint(currentMainQuest.GetCurrentQuestAction().GetGoal());
             }
+            
         }
         List<string> actionsToDo = _quests[_currentMainQuest].GetCurrentQuestAction().GetActionsToDoAtStart();
         if (actionsToDo.Count >0)
@@ -245,6 +259,13 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }
+
+        if (_quests[_currentMainQuest].GetCurrentQuestAction() is QuestKill aQuestKill)
+        {
+            if (aQuestKill.TryFillKills(ref specialEnemiesKilledWithoutBeingTheTask))
+                print("Succed !");
+        }
+
         CheckQuestItems(_checkItem);
         UpdateInGameQuestUi();
     }

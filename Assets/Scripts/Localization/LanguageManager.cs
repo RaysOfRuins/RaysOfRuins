@@ -19,6 +19,8 @@ public class LanguageManager : MonoBehaviour
 
     public UnityEvent languageChangedEvent = new();
 
+    public bool isMainMenu = true;
+
     public static LanguageManager instance;
 
     private void Awake()
@@ -28,13 +30,17 @@ public class LanguageManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this);
         }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     void Start()
     {
         selectedLanguage = PlayerPrefs.GetString("Language", "French");
         LoadLocalizationData();
-        InitializeFlag();
+        if(isMainMenu) InitializeFlag();
     }
 
     private void InitializeFlag()

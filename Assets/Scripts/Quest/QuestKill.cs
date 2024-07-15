@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "QuestKill", menuName = "ScriptableObjects/QuestAction/QuestKill", order = 1)]
@@ -37,22 +38,46 @@ public class QuestKill : QuestAction
     }
 
     //check if the pnj killed is from the good faction to increment the count
-    private void CheckKill(Faction faction, string enemyType)
+    private bool CheckKill(Faction faction, string enemyType)
     {
         if(faction == _faction && enemyType == _enemyType)
         {
             _killCount++;
+            return true;
         }
+        return false;
     }
 
     //return if the QuestKill is finished
-    public bool IsFinished(Faction faction, string enemyType)
+    public bool IsFinished(Faction faction, string enemyType, out bool hasContributed)
     {
-        CheckKill(faction, enemyType);
+        if(CheckKill(faction, enemyType))
+            hasContributed = true;
+        else
+            hasContributed = false;
+
         if (_killCount < _numberToKill)
         {
             return false;
         }
         return true;
+    }
+
+    public bool TryFillKills(ref List<string> kills)
+    {
+        bool foundOne = false;
+
+        for (int i = 0; i < kills.Count; i++)
+        {
+            if (kills[i] == _enemyType)
+            {
+                _killCount++;
+                kills.RemoveAt(i);
+                i--;
+                foundOne = true;
+            }
+        }
+
+        return foundOne;
     }
 }
