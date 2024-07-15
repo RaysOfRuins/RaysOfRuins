@@ -37,6 +37,8 @@ public class Humanoid : MonoBehaviour
 
     protected FactionManager _factionManager;
 
+    public GameObject bloodPrefab;
+
     protected virtual void Start()
     {
         _transform = transform;
@@ -82,6 +84,8 @@ public class Humanoid : MonoBehaviour
         {
             pSystem.Play();
             GetComponent<Rigidbody2D>().AddForce(fwd * 10, ForceMode2D.Impulse);
+            GameObject blood = Instantiate(bloodPrefab, new Vector3(_transform.position.x, _transform.position.y - 2f, 0), Quaternion.identity);
+            blood.transform.Rotate(new(0, 0, Random.Range(0f, 360f)));
         }
 
 

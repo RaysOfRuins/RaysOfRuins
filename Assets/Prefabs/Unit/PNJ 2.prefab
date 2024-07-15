@@ -1313,6 +1313,7 @@ MonoBehaviour:
   MoveFeet: 1
   CanRespawn: 1
   _slider: {fileID: 0}
+  maxLife: 100
   life: 100
   faction: 1
   isDead: 0
@@ -1322,6 +1323,7 @@ MonoBehaviour:
   _feetAnimator: {fileID: 8702537998892710122}
   _agent: {fileID: 5021856836070495951}
   _questType: 
+  bloodPrefab: {fileID: 8811509056359352798, guid: 593a6af257d21c04fa5f14e9a1dc93c6, type: 3}
   order: 0
   waitTime: 0
   canMove: 1
