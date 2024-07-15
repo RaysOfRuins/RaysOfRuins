@@ -9,6 +9,8 @@ public class AimLaser : MonoBehaviour
     public Transform laserFirePoint;
     public LineRenderer lineRenderer;
     new Transform transform;
+
+    public LayerMask layerMask;
     
     void Awake()
     {
@@ -19,9 +21,9 @@ public class AimLaser : MonoBehaviour
     public void ShootLaser(Vector3 direction)
     {
 
-        if (Physics2D.Raycast(laserFirePoint.position, direction))
+        if (Physics2D.Raycast(laserFirePoint.position, direction, Mathf.Infinity, layerMask))
         {
-            RaycastHit2D _hit = Physics2D.Raycast(laserFirePoint.position, direction);
+            RaycastHit2D _hit = Physics2D.Raycast(laserFirePoint.position, direction, Mathf.Infinity, layerMask);
             Draw2DRayToCollision(laserFirePoint.position, _hit.point);
         }
         else

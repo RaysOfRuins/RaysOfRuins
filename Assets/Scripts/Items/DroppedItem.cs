@@ -9,6 +9,7 @@ public class DroppedItem : Interactable
     private float _stuffQuantityInThis = 0;
 
     private float _despawnTimer = 120f;
+    
 
     /// <summary>
     /// Checks if the player enter the radius of the item, if he does, gets added to the list of interactable of the player
@@ -91,6 +92,7 @@ public class DroppedItem : Interactable
     private void Start()
     {
         DroppedItemManager.Instance.droppedItems.Add(this);
+        GetComponent<Rigidbody2D>().AddForce(Random.insideUnitCircle);
     }
 
     private void Update()
