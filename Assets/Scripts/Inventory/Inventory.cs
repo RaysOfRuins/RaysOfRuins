@@ -489,17 +489,22 @@ public class Inventory : MonoBehaviour
                 GameObject Item = Instantiate(_itemDroppedPrefab);
                 Item.transform.position = _player.transform.position;
                 DroppedItem itemDropped = Item.GetComponent<DroppedItem>();
-                itemDropped.SetStuffQuantityInThis(itemSlot.GetContainerQuantity());
-                itemDropped.quantityAmmo = itemSlot.ammoQuantity;
+                //itemDropped.SetStuffQuantityInThis(itemSlot.GetContainerQuantity());
+                itemDropped.SetStuffQuantityInThis(1);
+                //itemDropped.quantityAmmo = itemSlot.ammoQuantity;
+                itemDropped.quantityAmmo = 1;
                 if(itemSlot.Item is QuestItemContainer questItemContainer)
                 {
-                    QuestManager.instance.CheckQuestPick(-itemSlot.GetContainerQuantity(), questItemContainer.GetStuffInContainer());
+                    //QuestManager.instance.CheckQuestPick(-itemSlot.GetContainerQuantity(), questItemContainer.GetStuffInContainer());
+                    QuestManager.instance.CheckQuestPick(-1, questItemContainer.GetStuffInContainer());
                 }
 
                 ItemWithQuantity itemWithQuantity = new ItemWithQuantity();
                 itemWithQuantity.item = itemSlot.Item;
-                itemWithQuantity.quantityNeed = -itemSlot.Quantity;
-                itemSlot.UpdateQuantity(0);
+                //itemWithQuantity.quantityNeed = -itemSlot.Quantity;
+                itemWithQuantity.quantityNeed = -1;
+                //itemSlot.UpdateQuantity(0);
+                itemSlot.UpdateQuantity(itemSlot.Quantity - 1);
                 QuestManager.instance.CheckQuestItems(itemWithQuantity);
 
                 
