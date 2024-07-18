@@ -29,7 +29,13 @@ public class UnitBT : Humanoid
     private Transform _weaponTransform;
     private Transform _weaponAttackTransform;
 
+    public AIState aiState = AIState.Patroling;
+    AIState lastState = AIState.Patroling;
 
+    public SpriteRenderer stateRenderer;
+    public Animator stateAnimator;
+    [SerializeField] private Sprite _stateSeaching;
+    [SerializeField] private Sprite _stateAttacking;
 
     // Start is called before the first frame update
     public void Init()
@@ -42,6 +48,7 @@ public class UnitBT : Humanoid
         _unitCombat.Init();
         _unitCombat.weaponAttack.Init();
 
+        stateRenderer.sprite = null;
 
         _weaponTransform = _weapon.transform;
         _weaponAttackTransform = _unitCombat.weaponAttack.transform;
@@ -123,16 +130,52 @@ public class UnitBT : Humanoid
     // Update is called once per frame
     protected override void Update()
     {
+        
         base.Update();
         evaluateUpdate++;
         if (waitTime < Time.time && evaluateUpdate > jumpUpdate) // Is the unit wait
         {
+            lastState = aiState;
+            aiState = AIState.Patroling;
+
             evaluateUpdate = 0;
             _selectorRoot.Evaluate();
 
             UnitBodyRotation();
             WeaponAimRotation();
+
+            if(lastState != aiState) stateAnimator.Play("Pop", -1, 0f);
+
+            bool isPatroling = aiState == AIState.Patroling;
+            stateAnimator.SetBool("IsPatroling", isPatroling);
+
+            if(isPatroling) SwitchState(AIState.Patroling);
         }
+
+    }
+
+    public void SwitchState(AIState newState)
+    {
+        aiState = newState;
+
+        switch (aiState)
+        {
+            case AIState.Attacking:
+                stateRenderer.sprite = _stateAttacking;
+                stateAnimator.SetInteger("State", 1);
+                break;
+
+            case AIState.Seaching:
+                stateAnimator.SetInteger("State", 2);
+                stateRenderer.sprite = _stateSeaching;
+                break;
+
+            default:
+                //stateRenderer.sprite = null;
+                stateAnimator.SetInteger("State", 0);
+                return;
+        }
+            
 
     }
 
@@ -167,6 +210,12 @@ public class UnitBT : Humanoid
         }
     }
 
+    protected override void Death(Faction _faction)
+    {
+        base.Death(_faction);
+        stateAnimator.Play("Fade", -1, 0f);
+    }
+
 }
 
 // Contain all the possible state of a unit
@@ -179,4 +228,12 @@ public enum UnitOrder
 public enum Faction
 {
     Null,Military, Utopist, Survivalist, Scientist, Bandit, Player
+}
+
+public enum AIState
+{
+    Null,
+    Attacking,
+    Seaching,
+    Patroling,
 }

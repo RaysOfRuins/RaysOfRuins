@@ -9,11 +9,13 @@ public class GoToEnemy : Node
     UnitMovement _unitMovement;
     NavMeshAgent _agent;
     Transform _transform;
+    UnitBT _unitBT;
 
     public GoToEnemy(GameObject unit, NavMeshAgent agent)
     {
         _unit = unit.GetComponent<UnitCombat>();
         _unitMovement = unit.GetComponent<UnitMovement>();
+        _unitBT = unit.GetComponent<UnitBT>();
         _agent = agent;
         _transform = _unit.transform;
     }
@@ -28,6 +30,7 @@ public class GoToEnemy : Node
 
         else if(_unit.nearestEnemy == null && _unit.lastPosition != Vector3.zero && _unit.lastEnemy != null && (_agent.velocity.magnitude > 0.01f)) 
         {
+            _unitBT.SwitchState(AIState.Seaching);
             _unitMovement.ChangeTarget(_unit.lastPosition);
             return NodeState.SUCCESS;
         }

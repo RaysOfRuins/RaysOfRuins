@@ -8,16 +8,28 @@ using static Node_script;
 public class IsEnemyDetected : Node
 {
     UnitCombat _unit;
+    UnitBT _unitBT;
 
     public IsEnemyDetected(GameObject unit)
     {
         _unit = unit.GetComponent<UnitCombat>();
+        _unitBT = unit.GetComponent<UnitBT>();
     }
 
     public override NodeState Evaluate()
     {
-        if (_unit.IsEnemyInMyArea() || _unit.lastPosition != Vector3.zero )
+        bool enemyAround = _unit.IsEnemyInMyArea();
+        if (enemyAround || _unit.lastPosition != Vector3.zero )
         {
+            if(enemyAround)
+            {
+                _unitBT.SwitchState(AIState.Attacking);
+            }
+            else
+            {
+                _unitBT.SwitchState(AIState.Seaching);
+            }
+
             return NodeState.SUCCESS;
         }
         _unit.canAttack = false;
