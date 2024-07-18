@@ -155,7 +155,8 @@ public class FactionManager : MonoBehaviour
         }
 
         if((faction1 == Faction.Player || faction2 == Faction.Player) &&
-            (_statManager.CastToEFactionRespawn(faction1) == _statManager.GetRespawnFaction() || _statManager.CastToEFactionRespawn(faction2) == _statManager.GetRespawnFaction()))
+            (_statManager.CastToEFactionRespawn(faction1) == _statManager.GetRespawnFaction() || _statManager.CastToEFactionRespawn(faction2) == _statManager.GetRespawnFaction()) && 
+            reputation <= -1.0f)
         {
             _statManager.ChangeRespawnFaction(StatsManager.ERespawnFaction.Null);
         }
