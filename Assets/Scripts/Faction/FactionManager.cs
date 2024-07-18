@@ -310,25 +310,25 @@ public class FactionManager : MonoBehaviour
             switch(_otherFaction) 
             {
                 case Faction.Survivalist:
-                    _textReputationPlayerSurvivalist.text = reputation.ToString("f1");
+                    _textReputationPlayerSurvivalist.text = (reputation).ToString("f1");
                     _textReputationPlayerSurvivalist.transform.parent.GetComponent<Image>().sprite = sprite;
                     PlayerReputationParameters(_textReputationPlayerSurvivalist, reputation, _otherFaction);
                     break;
 
                 case Faction.Utopist:
-                    _textReputationPlayerUtopist.text = reputation.ToString("f1");
+                    _textReputationPlayerUtopist.text = (reputation).ToString("f1");
                     _textReputationPlayerUtopist.transform.parent.GetComponent<Image>().sprite = sprite;
                     PlayerReputationParameters(_textReputationPlayerUtopist, reputation, _otherFaction);
                     break;
 
                 case Faction.Scientist:
-                    _textReputationPlayerScientist.text = reputation.ToString("f1");
+                    _textReputationPlayerScientist.text = (reputation).ToString("f1");
                     _textReputationPlayerScientist.transform.parent.GetComponent<Image>().sprite = sprite;
                     PlayerReputationParameters(_textReputationPlayerScientist, reputation, _otherFaction);
                     break;
 
                 case Faction.Military:
-                    _textReputationPlayerMilitary.text = reputation.ToString("f1");
+                    _textReputationPlayerMilitary.text = (reputation).ToString("f1");
                     _textReputationPlayerMilitary.transform.parent.GetComponent<Image>().sprite = sprite;
                     PlayerReputationParameters(_textReputationPlayerMilitary, reputation, _otherFaction);
                     break;

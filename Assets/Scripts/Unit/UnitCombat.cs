@@ -176,6 +176,7 @@ public class UnitCombat : MonoBehaviour
 
         weaponAttack.Timer += weaponAttack.RangedWeapon.ReloadTime;
         _magazine = weaponAttack.RangedWeapon.MaxBullet;
+        if (_soundManager == null) print("ALERTE NULLLL");
         _soundManager.PlaySFX(weaponAttack._equipedWeapon.reloadSFX, _unitSoundPlayer.unitAudioSource);
         weaponAttack.Animator.Play(weaponAttack.RangedWeapon.animReload, 0, 0);
         return false;
