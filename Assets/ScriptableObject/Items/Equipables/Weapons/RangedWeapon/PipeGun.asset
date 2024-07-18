@@ -24,7 +24,7 @@ MonoBehaviour:
   _flipable: 0
   _damage: 25
   _attackSpeed: 1
-  _attackRange: 20
+  _attackRange: 30
   _leftHandPos: {x: 0.05, y: 0.06}
   _rightHandPos: {x: 0.112, y: -0.013}
   _rotationRightHand: 204.69
@@ -42,5 +42,5 @@ MonoBehaviour:
   _ammoType:
   - {fileID: 11400000, guid: 2c8f4bacac00df1499309c65241b96fb, type: 2}
   _firePoint: {x: 5, y: 2.3}
-  bullet: {fileID: 5008059619825466956, guid: b3fe1a02dfbdd534bab5e85ccb492e03, type: 3}
+  bullet: {fileID: 5008059619825466956, guid: 4654082d4d06a8148b0f00d84a2ef701, type: 3}
   animReload: PipeGunReload

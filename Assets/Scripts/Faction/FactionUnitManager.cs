@@ -167,7 +167,7 @@ public class FactionUnitManager : MonoBehaviour
 
         int _random = Random.Range(0, 100);
 
-        if (canProtectFaction)
+        if (canProtectFaction && BT._questType == "")
         {
 
             for (int i = 0; i < surveillancePoints.Count; i++)

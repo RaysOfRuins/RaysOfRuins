@@ -30,8 +30,7 @@ public class Humanoid : MonoBehaviour
     private MovePlayer _player;
     private float _reduceDamage = 0;
 
-    [SerializeField]
-    private string _questType;
+    public string _questType;
 
     private bool _canTakeDamageByPlayer = true;
 

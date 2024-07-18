@@ -24,7 +24,7 @@ MonoBehaviour:
   _flipable: 0
   _damage: 35
   _attackSpeed: 0.1538462
-  _attackRange: 20
+  _attackRange: 30
   _leftHandPos: {x: 0.5, y: -0.2}
   _rightHandPos: {x: 1.5, y: -0.08}
   _rotationRightHand: -90
