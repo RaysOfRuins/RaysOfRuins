@@ -45,6 +45,8 @@ public class StatsManager : Humanoid
     private bool _verifSprint;
     private bool _recupStamina;
 
+    public Animator postProcessEffectsAnimator;
+
     public UnityEvent haveChangeSpawn = new UnityEvent();
     
 
@@ -307,6 +309,14 @@ public class StatsManager : Humanoid
         DeathFade.enabled = false;
 
         isDead = false;
+    }
+
+    public override bool TakeDamage(float damage, Faction _faction, Vector2 fwd)
+    {
+        bool value = base.TakeDamage(damage, _faction, fwd);
+
+        postProcessEffectsAnimator.Play("Hit", -1, 0f);
+        return value;
     }
 
     private void Awake()
