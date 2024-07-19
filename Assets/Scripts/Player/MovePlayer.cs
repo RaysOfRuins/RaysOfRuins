@@ -59,6 +59,10 @@ public class MovePlayer : MonoBehaviour
     private bool _isReloading = false;
     private bool _cancelReload = false;
     public float moveSpeed = 7f;
+    public float speedAccel;
+    public float sprintSpeed;
+    public float sprintAccel;
+    public float moveDeceleration;
     private int _selectedWeapon = 0;
     private int oldAmmo = 0;
     private float _parryingReduceDamage = 15f;
@@ -145,18 +149,18 @@ public class MovePlayer : MonoBehaviour
             if (_isSprinting == true && stats.GetStamina() > 0 && weightDebuff > 0.10f)
             {
                 stats.ChangeIsSprinting(true);
-                _rb.velocity = _moveVector * moveSpeed * (weightDebuff - 0.05f) * 1.5f;
+                _rb.velocity = Vector2.ClampMagnitude(_rb.velocity + (_moveVector * sprintAccel * weightDebuff * Time.deltaTime), sprintSpeed);
             }
             else
             {
                 stats.ChangeIsSprinting(false);
-                _rb.velocity = _moveVector * moveSpeed * weightDebuff;
+                _rb.velocity = Vector2.ClampMagnitude(_rb.velocity + (_moveVector * speedAccel * weightDebuff * Time.deltaTime), moveSpeed);
             }
         }
         else
         {
             stats.ChangeIsSprinting(false);
-            _rb.velocity = Vector2.zero;
+            _rb.velocity = _rb.velocity * moveDeceleration;
         }
         
         //Debug.Log(_rb.velocity);
@@ -178,7 +182,7 @@ public class MovePlayer : MonoBehaviour
                 weightDebuff = 0.80f;
                 break;
             case >= 80f:
-                weightDebuff = 0.10f;
+                weightDebuff = 0.70f;
                 break;
         }
 
@@ -817,7 +821,6 @@ public class MovePlayer : MonoBehaviour
     {
         if (_inGameActionMap.enabled)
         {
-            _rb.velocity = Vector3.Normalize(_rb.velocity);
             Move();
             WeaponAimDirection();
             FlipPlayer();
@@ -828,7 +831,7 @@ public class MovePlayer : MonoBehaviour
         else
         {
             _moveVector = Vector2.zero;
-            _rb.velocity = Vector3.zero;
+            _rb.velocity = _rb.velocity * moveDeceleration;
         }
 
         if (_timer < Time.time) 
